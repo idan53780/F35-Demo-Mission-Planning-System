@@ -69,7 +69,7 @@ const AIRCRAFT_XML = `<?xml version="1.0" encoding="UTF-8"?>
     </specifications>
 
     <!-- ============================================================= -->
-    <!--  Load Stations (Weapons, Fuel, Countermeasures)               -->
+    <!--  Load Stations (Weapons, Fuel)                                -->
     <!-- ============================================================= -->
     <loadStations>
 
@@ -94,9 +94,7 @@ const AIRCRAFT_XML = `<?xml version="1.0" encoding="UTF-8"?>
         <!-- Internal fuel tank (treated as a load station for CG math) -->
         <station id="FUEL"  name="Internal Fuel"           arm="315.0" maxWeight="18500"/>
 
-        <!-- Countermeasure systems -->
-        <station id="FLARE" name="Countermeasure Flares"   arm="450.0" maxWeight="36"/>
-        <station id="DECOY" name="ALE-70 Towed Decoy"      arm="465.0" maxWeight="200"/>
+       
 
     </loadStations>
 

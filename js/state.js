@@ -96,7 +96,7 @@ class Station {
         this.name       = name;
         this.arm        = arm;        // inches from datum
         this.maxWeight  = maxWeight;  // lbs
-        this.capability = capability; // null for non-weapon stations (FUEL, FLARE, DECOY)
+        this.capability = capability; // null for non-weapon stations (FUEL)
         this.type       = type;       // null for non-weapon stations
 
         // Dynamic — null means nothing loaded
@@ -203,7 +203,7 @@ class PerformanceTables {
 class AircraftState {
     /**
      * @param {AircraftConfig}   config
-     * @param {Map<string, Station>} stations  — all stations including FUEL/FLARE/DECOY
+     * @param {Map<string, Station>} stations  — all stations including FUEL
      * @param {Map<string, Store>}   stores    — weapons library
      * @param {PerformanceTables}    perfTables
      */
@@ -285,7 +285,7 @@ class AircraftState {
     // ── Station helpers ──────────────────────────────────────────────────────
 
     /**
-     * Returns all weapon stations (excludes FUEL, FLARE, DECOY pseudo-stations).
+     * Returns all weapon stations 
      * Returned in the order they appear in the Map (insertion order = XML order).
      * @returns {Station[]}
      */

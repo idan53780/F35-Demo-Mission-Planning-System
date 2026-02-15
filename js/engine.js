@@ -149,7 +149,7 @@ class XmlParser {
             const name       = el.getAttribute("name");
             const arm        = parseFloat(el.getAttribute("arm"));
             const maxWeight  = parseFloat(el.getAttribute("maxWeight"));
-            // capability and type are null for FUEL / FLARE / DECOY
+            // capability and type are null for FUEL 
             const capability = el.getAttribute("capability") || null;
             const type       = el.getAttribute("type")       || null;
 
@@ -246,11 +246,7 @@ class XmlParser {
 //    - Empty aircraft   (emptyWeight × emptyCG — from AircraftConfig)
 //    - Each armed weapon station (store.weight × station.arm)
 //    - Fuel             (fuelWeight × FUEL station arm)
-//    - Flares           (flares maxWeight × FLARE station arm — always fitted)
-//
-//  Why "always fitted" for flares?
-//    Assumption: flares are a fixed part of the defensive systems for any
-//    mission. The DECOY (ALE-70) is not fitted by default.
+//    - No other components (e.g. crew, countermeasures) are modeled in this simplified tool.   
 // ─────────────────────────────────────────────────────────────────────────────
 
 class CgCalculator {
@@ -297,13 +293,7 @@ class CgCalculator {
             totalMoment += state.fuelWeight * fuelStation.arm;
         }
 
-        // ── Add flares (always fitted) ────────────────────────────────────────
-        const flareStation = state.stations.get("FLARE");
-        if (flareStation) {
-            totalWeight += flareStation.maxWeight;
-            totalMoment += flareStation.maxWeight * flareStation.arm;
-        }
-
+       
         // ── CG ───────────────────────────────────────────────────────────────
         // Guard against divide-by-zero on an impossible empty aircraft edge case
         const cgInches = totalWeight > 0 ? totalMoment / totalWeight : cfg.emptyCG;
