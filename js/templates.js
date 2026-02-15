@@ -18,8 +18,8 @@
 function tplTopBar() {
     return `
         <div class="topbar-brand">
-            <span class="brand-name">F-35A ADIR</span>
-            <span class="brand-sub">IAF LOAD &amp; PERF TOOL</span>
+            <span class="brand-name">F-35A </span>
+            <span class="brand-sub">Gaya Studios</span>
         </div>
 
         <div class="topbar-stats">
