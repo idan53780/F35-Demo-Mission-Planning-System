@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>F-35A DEBUG TEST</title>
+<style>
+/* Quick debug styles to verify layout logic */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; background: #04080d; color: #e8f4f0; font-family: Arial, sans-serif; font-size: 14px; }
+
+#debug-panel {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+    background: #111; border-bottom: 2px solid yellow; padding: 8px 16px;
+    font-family: monospace; font-size: 12px; color: yellow;
+}
+
+.app { display: none; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden; }
+.app.app--ready { display: flex; }
+.loading-overlay { position: fixed; inset: 0; background: #04080d; display: flex; align-items: center; justify-content: center; z-index: 9999; color: #00ff88; font-size: 20px; }
+.loading-overlay.hidden { display: none; }
+
+.top-bar { height: 56px; background: #0a1320; border-bottom: 1px solid #1e3040; display: flex; align-items: center; padding: 0 20px; gap: 24px; flex-shrink: 0; color: #00ff88; }
+.nav-bar { height: 42px; background: #070d14; border-bottom: 1px solid #152030; display: flex; align-items: stretch; flex-shrink: 0; }
+.nav-tab { display: flex; align-items: center; gap: 7px; padding: 0 24px; background: none; border: none; border-bottom: 2px solid transparent; color: #3a5565; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; cursor: pointer; }
+.nav-tab--active { color: #00ff88; border-bottom-color: #00ff88; }
+
+.main-content { flex: 1 1 0; min-height: 0; position: relative; overflow: hidden; }
+
+/* CRITICAL: Screen visibility */
+.screen { display: none !important; position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow-y: auto; padding: 16px 20px; }
+.screen.screen--active { display: block !important; }
+</style>
+</head>
+<body>
+
+<div id="debug-panel">DEBUG MODE — checking layout logic...</div>
+
+<div id="loading-overlay" class="loading-overlay">LOADING...</div>
+
+<div id="app" class="app">
+    <header id="top-bar" class="top-bar">[TOP BAR]</header>
+    <nav class="nav-bar">
+        <button class="nav-tab nav-tab--active" data-screen="overview" onclick="showScreen('overview')">OVERVIEW</button>
+        <button class="nav-tab" data-screen="fuel" onclick="showScreen('fuel')">FUEL</button>
+        <button class="nav-tab" data-screen="ammo" onclick="showScreen('ammo')">AMMUNITION</button>
+    </nav>
+    <main class="main-content">
+        <div class="screen screen--active" data-screen="overview" style="background:rgba(0,255,0,0.05);">
+            <h2 style="color:#00ff88">OVERVIEW SCREEN</h2>
+            <p>If you see this AND the fuel screen at the same time, the CSS is broken.</p>
+        </div>
+        <div class="screen" data-screen="fuel" style="background:rgba(255,255,0,0.05);">
+            <h2 style="color:#ffb300">FUEL SCREEN</h2>
+            <p>You should only see this when clicking the FUEL tab.</p>
+        </div>
+        <div class="screen" data-screen="ammo" style="background:rgba(255,0,0,0.05);">
+            <h2 style="color:#ff3b3b">AMMO SCREEN</h2>
+            <p>You should only see this when clicking the AMMO tab.</p>
+        </div>
+    </main>
+</div>
+
+<script>
+function showScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(el => {
+        el.classList.toggle("screen--active", el.dataset.screen === screenId);
+    });
+    document.querySelectorAll(".nav-tab").forEach(el => {
+        el.classList.toggle("nav-tab--active", el.dataset.screen === screenId);
+    });
+    updateDebug();
+}
+
+function updateDebug() {
+    const screens = document.querySelectorAll(".screen");
+    let info = "Screens: ";
+    screens.forEach(s => {
+        const vis = getComputedStyle(s).display;
+        info += `${s.dataset.screen}=${vis} `;
+    });
+    const app = document.getElementById("app");
+    info += ` | app.display=${getComputedStyle(app).display}`;
+    info += ` | app.classes="${app.className}"`;
+    document.getElementById("debug-panel").textContent = info;
+}
+
+// Simulate init
+setTimeout(() => {
+    document.getElementById("loading-overlay").classList.add("hidden");
+    document.getElementById("app").classList.add("app--ready");
+    updateDebug();
+}, 500);
+</script>
+</body>
+</html>

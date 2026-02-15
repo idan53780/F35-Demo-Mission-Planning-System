@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>F-35A Adir — Load &amp; Performance Tool</title>
+    <link rel="stylesheet" href="./css/style.css"/>
+
+    <!-- Fonts: embedded via CSS @font-face fallbacks — no external requests needed -->
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     LOADING OVERLAY
+     Shown while XML files are being fetched and parsed.
+     Hidden by init() on success; replaced with error HTML on failure.
+══════════════════════════════════════════════════════════════════════════════ -->
+<div id="loading-overlay" class="loading-overlay">
+    <div class="loading-inner">
+        <img class="loading-icon" src="assets/logo.png" alt="Logo"/>
+        <div class="loading-title">F-35A </div>
+        <div class="loading-sub">INITIALISING SYSTEMS…</div>
+        <div class="loading-spinner"></div>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     APP SHELL
+     Hidden until init() completes successfully.
+══════════════════════════════════════════════════════════════════════════════ -->
+<div id="app" class="app">
+
+    <!-- ── Fixed top bar ────────────────────────────────────────────── -->
+    <!-- Content injected by buildTopBar() in app.js -->
+    <header id="top-bar" class="top-bar"></header>
+
+    <!-- ── Navigation tabs ──────────────────────────────────────────── -->
+    <nav class="nav-bar">
+        <button class="nav-tab nav-tab--active"
+                data-screen="overview"
+                onclick="showScreen('overview')">
+            <span class="nav-icon">◈</span>
+            OVERVIEW
+        </button>
+        <button class="nav-tab"
+                data-screen="fuel"
+                onclick="showScreen('fuel')">
+            <span class="nav-icon">◉</span>
+            FUEL
+        </button>
+        <button class="nav-tab"
+                data-screen="ammo"
+                onclick="showScreen('ammo')">
+            <span class="nav-icon">◎</span>
+            AMMUNITION
+        </button>
+    </nav>
+
+    <!-- ── Screen containers ────────────────────────────────────────── -->
+    <!-- Each screen's inner HTML is injected by its builder in app.js  -->
+    <main class="main-content">
+
+        <div class="screen screen--active" data-screen="overview"></div>
+        <div class="screen"               data-screen="fuel"></div>
+        <div class="screen"               data-screen="ammo"></div>
+
+    </main>
+
+</div><!-- /#app -->
+
+
+<!-- Scripts — load order matters: data → state → engine → templates → app -->
+<script src="./js/data.js"></script>
+<script src="./js/state.js"></script>
+<script src="./js/engine.js"></script>
+<script src="./js/templates.js"></script>
+<script src="./js/app.js"></script>
+
+</body>
+</html>

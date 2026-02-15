@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+===============================================================================
+ Lockheed Martin F-35A “Adir” (IAF) – Aircraft Load & Balance Configuration
+===============================================================================
+ This XML file defines the physical configuration of an F-35A operated by
+ the Israeli Air Force (IAF).
+
+ It is designed to support:
+   • Weapon loadout validation
+   • Weight and balance calculations
+   • Center of Gravity (CG) envelope checking
+   • Stealth vs non-stealth configuration logic
+
+ All weights are in pounds (lbs)
+ All arms (moment arms) are in inches from aircraft datum
+
+ 
+===============================================================================
+-->
+
+<aircraft>
+
+    <!-- Aircraft model and variant -->
+    <model>Lockheed Martin F-35A - IAF Adir</model>
+
+    <!-- ============================================================= -->
+    <!--  Aircraft Weight & CG Specifications                          -->               
+    <!-- ============================================================= -->
+    <specifications>
+
+        <!-- Basic empty aircraft weight (no fuel, no weapons) -->
+        <emptyWeight unit="lbs">29300</emptyWeight>
+
+        <!-- Maximum allowed takeoff weight -->
+        <maxWeight unit="lbs">70000</maxWeight>
+
+        <!-- Maximum weight excluding fuel (structure + stores) -->
+        <maxZeroFuelWeight unit="lbs">44500</maxZeroFuelWeight>
+
+        <!-- Center of gravity of the empty aircraft -->
+        <emptyCG unit="in">305.5</emptyCG>
+
+        <!-- Allowable CG envelope for safe flight -->
+        <cgLimits>
+            <forward unit="in">298.0</forward>
+            <aft unit="in">312.0</aft>
+        </cgLimits>
+
+    </specifications>
+
+    <!-- ============================================================= -->
+    <!--  Load Stations (Weapons, Fuel, Countermeasures)               -->
+    <!-- ============================================================= -->
+    <!--
+         Each station defines:
+         - Physical mounting location
+         - Arm for moment calculation
+         - Maximum allowed weight
+         - Capability (Air to Air / Air to Ground / Multi-Role)
+         - Type (Internal or External)
+    -->
+    <loadStations>
+
+        <!-- Internal stealth air-to-air missile bays stations (stealth capable) -->
+        <station id="STA_5" name="Left Internal A/A" arm="310" maxWeight="500" capability="AA_Only" type="Internal"/>
+        <station id="STA_7" name="Right Internal A/A" arm="310" maxWeight="500" capability="AA_Only" type="Internal"/>
+
+        <!-- Internal stealth heavy weapon bays stations (stealth capable) -->
+        <station id="STA_4" name="Left Internal Heavy" arm="320" maxWeight="2500" capability="Multi_Role" type="Internal"/>
+        <station id="STA_8" name="Right Internal Heavy" arm="320" maxWeight="2500" capability="Multi_Role" type="Internal"/>
+
+        <!-- External pylons for air-to-ground weapons (non-stealth) -->
+        <station id="STA_2" name="Outer Pylon Left" arm="350" maxWeight="2500" capability="AG_Only" type="External"/>
+        <station id="STA_3" name="Mid Pylon Left" arm="340" maxWeight="2500" capability="AG_Only" type="External"/>
+        <station id="STA_9" name="Mid Pylon Right" arm="340" maxWeight="2500" capability="AG_Only" type="External"/>
+        <station id="STA_10" name="Outer Pylon Right" arm="350" maxWeight="2500" capability="AG_Only" type="External"/>
+
+        <!-- Wingtip rails for short-range air-to-air missiles -->
+        <station id="STA_1" name="Wingtip Rail Left" arm="360" maxWeight="300" capability="AA_Only" type="External"/>
+        <station id="STA_11" name="Wingtip Rail Right" arm="360" maxWeight="300" capability="AA_Only" type="External"/>
+
+        <!-- Internal fuel tank (treated as a load station for CG math) -->
+        <station id="FUEL" name="Internal Fuel" arm="315.0" maxWeight="18500"/>
+
+        <!-- Countermeasure systems -->
+        <station id="FLARE" name="Countermeasure Flares" arm="450.0" maxWeight="36"/> 
+        <station id="DECOY" name="ALE-70 Towed Decoy" arm="465.0" maxWeight="200"/>
+
+    </loadStations>
+
+    <!-- ============================================================= -->
+    <!--  Stores (Weapons Library)                                     -->
+    <!-- ============================================================= -->
+    <!--
+         This section defines all stores that can be loaded.
+         Each store specifies:
+         - Weight
+         - Mission type
+         - Stealth compatibility
+    -->
+    <storesLibrary>
+        <store id="AIM-120C" name="AMRAAM" type="AA" weight="335" stealth="true"/>
+        <store id="AIM-9X" name="Sidewinder" type="AA" weight="190" stealth="false"/>
+        <store id="GBU-31_JDAM" name="JDAM (2000 lb)" type="AG" weight="2000" stealth="true"/>
+    </storesLibrary>
+
+</aircraft>

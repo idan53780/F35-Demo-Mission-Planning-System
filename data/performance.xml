@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+===============================================================================
+ F-35A “Adir” (IAF) – Performance Data File
+===============================================================================
+ This XML defines aircraft performance parameters used by the simulation
+ and mission-planning system.
+
+ It includes:
+   • Takeoff rotation speeds (Vr) as a function of weight
+   • Landing reference speeds (Vref) as a function of weight
+   • Takeoff distance vs gross weight
+   • Drag multipliers for external stores
+
+ Units:
+   - Weight is in pounds (lbs)
+   - Speeds are in knots (KIAS)
+   - Distances are in feet
+   - Drag penalties are dimensionless multipliers
+
+ These tables allow realistic runway, braking, and acceleration calculations
+ based on aircraft loading.
+===============================================================================
+-->
+
+<performance>
+
+    <!-- ============================================================= -->
+    <!--  Takeoff Speeds (Vr)                                          -->
+    <!-- ============================================================= -->
+    <!--
+         Vr = Rotation speed at which the pilot initiates takeoff.
+         Values increase with aircraft gross weight.
+    -->
+    <takeoffSpeeds>
+        <entry weight="35000" vr="135"/>
+        <entry weight="45000" vr="148"/>
+        <entry weight="55000" vr="162"/>
+        <entry weight="65000" vr="174"/>
+        <entry weight="70000" vr="180"/>
+    </takeoffSpeeds>
+
+    <!-- ============================================================= -->
+    <!--  Landing Speeds (Vref)                                        -->
+    <!-- ============================================================= -->
+    <!--
+         Vref = Final approach reference speed at 50 ft AGL.
+         Used for landing distance .
+    -->
+    <landingSpeeds>
+        <entry weight="30000" vref="130"/>
+        <entry weight="35000" vref="138"/>
+        <entry weight="40000" vref="145"/>
+        <entry weight="45000" vref="152"/>
+        <entry weight="50000" vref="158"/>
+    </landingSpeeds>
+
+    <!-- ============================================================= -->
+    <!--  Takeoff Ground Roll Distance                                 -->
+    <!-- ============================================================= -->
+    <!--
+         Distance required to reach Vr and lift off under standard
+         conditions (ISA, sea level, no wind).
+    -->
+    <takeoffDistance>
+        <entry weight="35000" distance="1800"/>
+        <entry weight="50000" distance="3200"/>
+        <entry weight="70000" distance="7000"/>
+    </takeoffDistance>
+
+    <!-- ============================================================= -->
+    <!--  External Store Drag Modeling                                 -->
+    <!-- ============================================================= -->
+    <!--
+         These multipliers increase aerodynamic drag and reduce
+         aircraft performance when external stores are carried.
+    -->
+    <dragLogic>
+
+        <!-- Penalty applied when external pylons are loaded -->
+        <pylonPenalty>1.12</pylonPenalty>
+
+        <!-- Penalty applied when wingtip missiles are installed -->
+        <wingtipPenalty>1.05</wingtipPenalty>
+
+    </dragLogic>
+
+</performance>
