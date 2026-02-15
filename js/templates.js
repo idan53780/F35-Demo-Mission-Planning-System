@@ -187,7 +187,7 @@ function tplOverviewScreen(cfg, aircraftSvg, fmt) {
                 </div>
 
                 <!-- Active loadout chips -->
-                <div class="gauge-label" style="margin-top: 16px">LOADOUT</div>
+                <div class="gauge-label" style="margin-top: 20px">WEAPON CONFIGURATION</div>
                 <div class="loadout-chips" id="bind-ov-loadout-chips"></div>
             </div>
 
@@ -350,7 +350,7 @@ function tplAmmoScreen(stationMapSvg) {
             <!-- Right: loadout configuration -->
             <div class="panel">
                 <div class="panel-title-row">
-                    <h2 class="panel-title">LOADOUT CONFIGURATION</h2>
+                    <h2 class="panel-title">WEAPON CONFIGURATION</h2>
                     <button class="clear-btn" onclick="clearAll()">CLEAR ALL</button>
                 </div>
 
@@ -491,16 +491,7 @@ function tplAircraftSvg(weaponStations) {
             opacity="0.85"
         />
 
-        <!-- CG datum line (horizontal across the aircraft) -->
-        <line id="cg-datum-line" x1="60" y1="352" x2="440" y2="352"
-            stroke="var(--col-amber)" stroke-width="0.8"
-            stroke-dasharray="5,4" opacity="0.35"/>
-
-        <!-- CG position diamond — moved by renderOverview() -->
-        <polygon
-            id="bind-cg-diamond"
-            points="250,353 257,360 250,367 243,360"
-            fill="var(--col-amber)" opacity="0.95"/>
+       
 
         <!-- Station dots -->
         ${stationDots}

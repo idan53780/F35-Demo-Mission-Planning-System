@@ -249,16 +249,7 @@ function renderOverview() {
         d.cgStatus === "LIMIT" ? "CG OUTSIDE LIMITS" :
         d.cgStatus === "CAUTION" ? "CG CAUTION" : "CG NORMAL");
 
-    // CG diamond on silhouette (top-down view)
-    // Map cgInches → x position in the SVG (fwd limit = x~60, aft limit = x~440)
-    const SVG_FWD_X = 60, SVG_AFT_X = 440;
-    const cgRatio = (d.cgInches - cfg.cgLimits.forward) / cfg.cgEnvelopeRange;
-    const diamondX = Math.round(SVG_FWD_X + cgRatio * (SVG_AFT_X - SVG_FWD_X));
-    const dEl = document.getElementById("bind-cg-diamond");
-    if (dEl) {
-        dEl.setAttribute("points",
-            `${diamondX},353 ${diamondX+7},360 ${diamondX},367 ${diamondX-7},360`);
-    }
+    
 
     // Performance table
     setText("bind-ov-vr",   d.vr);
@@ -294,7 +285,7 @@ function renderLoadoutChips() {
     }
 
     container.innerHTML = armed.map(station => {
-        const store = STATE.getStore(state_getLoadedStore(station.id));
+        const store = state_getLoadedStore(station.id);
         const cls   = station.isExternal ? "chip chip--ext" : "chip chip--int";
         return `<span class="${cls}">
                     <span class="chip-id">${station.id.replace("STA_", "")}</span>
