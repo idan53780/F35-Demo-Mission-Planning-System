@@ -54,14 +54,16 @@ class Store {
      *   - AA_Only  stations accept AA weapons only
      *   - AG_Only  stations accept AG weapons only
      *   - Multi_Role stations accept everything
+     *   - sidewinder cant be loaded on internal stealth stations
      *   - Store weight must not exceed station maxWeight
      *
      * @param {Station} station
      * @returns {boolean}
      */
     isCompatibleWith(station) {
-        if (station.capability === "AA_Only"   && !this.isAA) return false;
-        if (station.capability === "AG_Only"   && !this.isAG) return false;
+        if (station.capability === "AA_Only"   && !this.isAA) return false; // AA stations cant take AG weapons 
+        if (station.capability === "AG_Only"   && !this.isAG) return false; //AG stations cant take AA weapons
+        if (!station.isExternal && this.id === "Sidewinder") return false; // block sidewinders from internal stealth stations
         // Multi_Role: no capability restriction
         return true;
         // Note: weight overloading is allowed as a selection but flagged in the UI.

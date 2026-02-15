@@ -101,9 +101,9 @@
          - Stealth compatibility
     -->
     <storesLibrary>
-        <store id="AIM-120C" name="AMRAAM" type="AA" weight="335" stealth="true"/>
-        <store id="AIM-9X" name="Sidewinder" type="AA" weight="190" stealth="false"/>
-        <store id="GBU-31_JDAM" name="JDAM (2000 lb)" type="AG" weight="2000" stealth="true"/>
+        <store id="AMRAAM" name="AIM-120C" type="AA" weight="335" stealth="true"/>
+        <store id="Sidewinder" name="AIM-9X" type="AA" weight="190" stealth="false"/>
+        <store id="JDAM (2000 lb)" name="GBU-31 JDAM (2000 lb)" type="AG" weight="2000" stealth="true"/>
     </storesLibrary>
 
 </aircraft>

@@ -294,7 +294,7 @@ function renderLoadoutChips() {
     }
 
     container.innerHTML = armed.map(station => {
-        const store = STATE.getStore(station.loadedStoreId);
+        const store = STATE.getStore(state_getLoadedStore(station.id));
         const cls   = station.isExternal ? "chip chip--ext" : "chip chip--int";
         return `<span class="${cls}">
                     <span class="chip-id">${station.id.replace("STA_", "")}</span>
