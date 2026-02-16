@@ -69,6 +69,44 @@ class XmlParser {
         return new AircraftState(config, stations, stores, perfTables);
     }
 
+     /**
+     * Attempts to load XML data from external files first (for localhost).
+     * Falls back to the inline string constants if fetch fails (for file://).
+     *
+     * @returns {Promise<AircraftState>}
+     */
+    static async loadDataAsync() {
+        let aircraftXml  = AIRCRAFT_XML;
+        let performanceXml = PERFORMANCE_XML;
+
+        try {
+            const [aircraftResp, performanceResp] = await Promise.all([
+                fetch("data/aircraft.xml"),
+                fetch("data/performance.xml")
+            ]);
+
+            if (aircraftResp.ok && performanceResp.ok) {
+                aircraftXml    = await aircraftResp.text();
+                performanceXml = await performanceResp.text();
+                console.log("XML loaded from external files.");
+            } else {
+                console.warn("XML fetch failed — using inline fallback.");
+            }
+        } catch (e) {
+            console.warn("XML fetch unavailable (likely file://) — using inline fallback.");
+        }
+
+        const aircraftDoc    = XmlParser._parseXmlString(aircraftXml,    "aircraft.xml");
+        const performanceDoc = XmlParser._parseXmlString(performanceXml, "performance.xml");
+
+        const { config, stations, stores } = XmlParser._parseAircraftXml(aircraftDoc);
+        const perfTables = XmlParser._parsePerformanceXml(performanceDoc);
+
+        return new AircraftState(config, stations, stores, perfTables);
+    }
+
+
+ 
 
     // ── Private: parse XML string ─────────────────────────────────────────────
 
@@ -354,10 +392,11 @@ class CgCalculator {
      * @param {AircraftConfig} config
      * @returns {"NORMAL" | "CAUTION" | "LIMIT"}
      */
+    // Threshold lowered to 80% to demonstrate CAUTION state 
     static weightStatus(grossWeight, config) {
         const percent = (grossWeight / config.maxWeight) * 100;
-        if (percent > 100) return "LIMIT";
-        if (percent > 95)  return "CAUTION";
+        if (percent > 85) return "LIMIT";
+        if (percent > 80)  return "CAUTION";
         return "NORMAL";
     }
 }
