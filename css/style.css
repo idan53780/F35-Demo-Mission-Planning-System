@@ -1,10 +1,10 @@
 /*
  * style.css
  * =========
- * Military HUD visual language for the F-35A Load & Performance Tool.
+ * Main stylesheet for the F-35 mission planing tool. Contains all styles for the app, * organized by component and screen.
  *
  * Structure:
- *   1. CSS custom properties (design tokens)
+ *   1. CSS custom properties 
  *   2. Reset & base
  *   3. Loading overlay
  *   4. App shell & layout
@@ -13,9 +13,9 @@
  *   7. Screen & panel containers
  *   8. Shared components (badges, bars, tables, buttons, inputs)
  *   9. SVG components (aircraft silhouette, station dots, CG marker)
- *  10. Screen 1 — Overview
- *  11. Screen 2 — Fuel
- *  12. Screen 3 — Ammunition
+ *  10. Screen 1 - Overview
+ *  11. Screen 2 - Fuel
+ *  12. Screen 3 - Ammunition
  *  13. Scrollbar
  *  14. Animations
  */
@@ -265,7 +265,7 @@ table  { border-collapse: collapse; width: 100%; }
     font-family: var(--font-mono);
     font-size: 13px;
     letter-spacing: 1.5px;
-    color: var(--col-muted);
+    color: var(--col-label);
 }
 
 .stat-value {
@@ -825,6 +825,7 @@ table  { border-collapse: collapse; width: 100%; }
 
 .station-map-wrap {
     width: 100%;
+    overflow: hidden;
 }
 
 .silhouette-svg,
@@ -968,13 +969,32 @@ table  { border-collapse: collapse; width: 100%; }
 
 @media (max-width: 820px) {
     .ammo-layout { grid-template-columns: 1fr; }
+
+    /* Remove sticky on mobile */
+    .ammo-layout > .panel:first-child {
+        position: static;
+    }
+
+    /* Constrain the station map panel */
+    .station-map-wrap {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .station-map-svg {
+        max-height: 250px;
+        width: 100%;
+    }
 }
 
-/* Left panel sticks to viewport while right panel scrolls  */
-.ammo-layout > .panel:first-child {
-    position: sticky;
-    top: 18px;
+/* Left panel sticks to viewport while right panel scrolls (desktop only) */
+@media (min-width: 821px) {
+    .ammo-layout > .panel:first-child {
+        position: sticky;
+        top: 18px;
+    }
 }
+
 
 /* Station rows in loadout panel */
 .station-rows {
