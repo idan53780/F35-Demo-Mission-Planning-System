@@ -3,14 +3,10 @@
  * =======
  * Inline data source — both XML files embedded as JavaScript string constants.
  *
- * Why inline?
- *   Browsers block fetch() on file:// URLs (CORS policy). Embedding the data
- *   here lets index.html open directly from the filesystem — no local server
- *   required. The XML content is identical to the source files in /data/.
- *
- * The XmlParser in engine.js reads from these constants instead of fetching.
- *
- * Load order: data.js → state.js → engine.js → app.js
+ * These serve as a FALLBACK when the app is opened via file:// (where fetch()
+ * is blocked by the browser). When hosted on localhost or a server, the app loads
+ * the actual XML files from disk via fetch() instead.
+ * Load order: data.js → state.js → engine.js → templates.js → app.js
  */
 
 
@@ -118,7 +114,7 @@ const PERFORMANCE_XML = `<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 ===============================================================================
- F-35A "Adir" (IAF) - Performance Data File
+ F-35A  - Performance Data File
 ===============================================================================
  This XML defines aircraft performance parameters used by the simulation
  and mission-planning system.

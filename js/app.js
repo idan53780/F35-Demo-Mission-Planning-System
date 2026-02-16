@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", init);
 async function init() {
     try {
         // Parse both XML strings from the inline constants in data.js
-        STATE = XmlParser.loadData();
+        STATE = await XmlParser.loadDataAsync();
 
         // First calculation — populates state.derived before any render
         recalculate(STATE);
@@ -197,7 +197,7 @@ function renderTopBar() {
     const gwPct = (d.grossWeight / cfg.maxWeight) * 100;
     setStatusBadge("bind-topbar-weight-status",
         d.weightStatus,
-        gwPct > 100 ? "OVER MAX" : gwPct > 95 ? "NEAR MAX" : "NOMINAL"
+        gwPct > 100 ? "WT OVER MAX" : gwPct > 60 ? "WT NEAR MAX" : "WT NOMINAL"
     );
 
     // CG status badge
